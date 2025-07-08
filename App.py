@@ -68,13 +68,22 @@ def send_invite(email: str, token: str):
     msg['From'] = SMTP_USER
     msg['To'] = email
     params = urlencode({'token': token})
-    APP_URL = "https://1cvhrms.streamlit.app"  # ← make sure this is your real app URL
-link = f"{APP_URL}/?{params}"
+    APP_URL = "https://1cvhrms.streamlit.app"  # <-- move this to top of your file
+
+def send_invite(email: str, token: str):
+    msg = EmailMessage()
+    msg['Subject'] = 'You are invited to 1 Cybervalley HRMS'
+    msg['From'] = SMTP_USER
+    msg['To'] = email
+    params = urlencode({'token': token})
+    link = f"{APP_URL}/?{params}"
     msg.set_content(f"Click the link to register: {link}")
+    
     with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
         server.starttls()
         server.login(SMTP_USER, SMTP_PASS)
         server.send_message(msg)
+
 
 # --- THEME & PAGE CONFIG ---
 st.set_page_config(page_title=ST_PAGE_TITLE, page_icon=":office:")
