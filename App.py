@@ -68,7 +68,8 @@ def send_invite(email: str, token: str):
     msg['From'] = SMTP_USER
     msg['To'] = email
     params = urlencode({'token': token})
-    link = st.get_option('server.address') + '?' + params
+    APP_URL = "https://1cvhrms.streamlit.app"  # ← make sure this is your real app URL
+link = f"{APP_URL}/?{params}"
     msg.set_content(f"Click the link to register: {link}")
     with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
         server.starttls()
